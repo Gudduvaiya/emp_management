@@ -73,6 +73,21 @@
     padding: 90px 0px;
     align-items: center;
 }
+.form div{
+    width: 365px;
+    margin: 8px 0px;
+}
+.form div select{
+    cursor: pointer;
+    padding: 6px;
+    border: 2px solid #e80d54;
+    border-radius: 6px;
+    outline:none
+}
+.form div select option{
+    background-color: #e80d54;
+    color: #fff;
+}
 .form input{
     width: 350px;
     padding: 11px;
