@@ -1,5 +1,6 @@
 const exp = require("express");
 const bcrypt = require("bcrypt");
+const cors=require('cors')
 require("./db/config");
 const empModel = require("./db/emp_model");
 const holidayModel = require("./db/holiday_model");
@@ -7,6 +8,7 @@ const holidayModel = require("./db/holiday_model");
 const saltRounds = 10;
 
 const app = exp();
+app.use(cors())
 app.use(exp.json());
 
 //Middleware for update emp

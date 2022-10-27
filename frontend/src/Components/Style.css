@@ -126,6 +126,11 @@
     color: #e80d54;
     border: 2px solid #e80d54;
 }
+.err-msg{
+    color: red;
+    text-align: left;
+    font-size: 12px;
+}
 /* Sign up ends */
 
 /* Login starts */
