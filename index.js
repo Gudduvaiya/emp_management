@@ -20,7 +20,7 @@ function UpdateMiddleware(req, res, next) {
   }
 }
 //add user API
-app.post("/emp/add-emp", async (req, res) => {
+app.post("/emp/add", async (req, res) => {
   const { password } = req.body;
   bcrypt.hash(password, saltRounds, async function (err, hash) {
     //gaurd block
@@ -53,7 +53,7 @@ app.post("/emp/add-emp", async (req, res) => {
 });
 
 // fetch employee data
-app.get("/emps", async (req, res) => {
+app.get("/emp", async (req, res) => {
   let data = await empModel.find().select("-password");
   res.send(data);
 });
@@ -149,7 +149,7 @@ app.get("/holiday", async (req, res) => {
 });
 
 //update Holidays
-app.put("holiday/update/:id", async (req, res) => {
+app.put("/holiday/update/:id", async (req, res) => {
   let data = await holidayModel.updateOne(
     { _id: req.params.id },
     { $set: req.body }
