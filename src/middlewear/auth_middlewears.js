@@ -46,6 +46,7 @@ const ValidateUpdatePassMiddleware=(req,res,next)=>{
 	else if(!body.password){
 		res.send({Error:"Please Enter Your new Password to poccessed!"})
 	}
+	else next()
 }
 
 module.exports = { ValidateProfileUpdateMiddleware,ValidateSignupMiddleware, ValidateUpdatePassMiddleware };
