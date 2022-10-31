@@ -7,7 +7,7 @@ const UserSchema = new mongoose.Schema({
 	name: String,
 	email: { type: String, unique: true },
 	desigation: String,
-	joined_on: { type: String, default: Date.now() },
+	joined_on: { type: String, default: "Not Available!"},
 	password: String,
 });
 
