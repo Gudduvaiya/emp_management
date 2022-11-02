@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const jwtkey = "emp_management";
+const {BODY_EMPTY} =require('../constants')
 
 const VerifyTokenMiddlewear = (req, res, next, isInSeries = false) => {
 	let token = req.headers["authorization"];
@@ -26,7 +27,7 @@ const VerifyIsAdminMiddlewear = (req, res, next) => {
 			if (decoded.is_admin) next();
 			else
 				res.status(401).send({
-					Error: "Only an admin can access this.",
+					error: "Only an admin can access this.",
 				});
 		},
 		true
@@ -41,7 +42,7 @@ const VerifyIsAdminOrSelfMiddlewear = (req, res, next) => {
 			if (decoded.is_admin || valid.id == req.params.id) next();
 			else
 				res.status(401).send({
-					Error: "ou are not authorized to fetch the data.",
+					error: "you are not authorized to fetch the data.",
 				});
 		},
 		true
@@ -50,15 +51,15 @@ const VerifyIsAdminOrSelfMiddlewear = (req, res, next) => {
 
 const ValidateProfileUpdateMiddleware = (req, res, next) => {
 	if (Object.keys(req.body || {}).length === 0) {
-		res.send({ Error: "Request body can't be empty!" });
+		res.status(400).send({ error: BODY_EMPTY });
 	} else if (req.body.password || req.body.email)
-		res.send({ Error: "Can't update 'password' or 'email'!" });
+		res.status(400).send({ error: "Can't update 'password' or 'email'!" });
 	else next();
 };
 
 const ValidateHolidayUpdateMiddleware = (req, res, next) => {
 	if (Object.keys(req.body || {}).length === 0) {
-		res.send({ Error: "Request body can't be empty!" });
+		res.status(400).send({ error: BODY_EMPTY });
 	} else next();
 };
 
@@ -97,11 +98,11 @@ const ValidateSignupMiddleware = (req, res, next) => {
 const ValidateUpdatePassMiddleware = (req, res, next) => {
 	const body = req.body;
 	if (Object.keys(req.body || {}).length === 0) {
-		res.send({ Error: "Request body can't be empty!" });
+		res.status(400).send({ error: BODY_EMPTY });
 	} else if (!body.oldPassword) {
-		res.send({ Error: "Please Enter Your Old Password to poccessed!" });
+		res.status(401).send({ error: "Please Enter Your Old Password to poccessed!" });
 	} else if (!body.password) {
-		res.send({ Error: "Please Enter Your new Password to poccessed!" });
+		res.status(401).send({ error: "Please Enter Your new Password to poccessed!" });
 	} else next();
 };
 

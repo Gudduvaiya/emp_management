@@ -32,7 +32,7 @@ router.post(
 			//gaurd block
 			if (err) {
 				console.log(err);
-				res.send("error");
+				res.status(400).send("error while generating hash");
 			}
 
 			try {
@@ -82,7 +82,7 @@ router.post(
 		bcrypt.compare(oldPassword, data.password, (err, result) => {
 			if (result) {
 				if (oldPassword == password) {
-					res.send({
+					res.status(400).send({
 						error: "Both Passwords are same, Nothing to update!",
 					});
 				} else {
@@ -92,7 +92,7 @@ router.post(
 						async function (err, hash) {
 							if (err) {
 								console.log(err);
-								res.send("error");
+								res.status(400).send("error while generating hash!");
 							}
 							console.log(hash);
 							// temp["password"] = hash;
@@ -113,7 +113,7 @@ router.post(
 					);
 				}
 			} else {
-				res.send({ error: "Old password is wrong!" });
+				res.status(401).send({ error: "Old password is wrong!" });
 			}
 		});
 	}
@@ -231,23 +231,23 @@ router.put(
 			const id = ObjectId(req.params.id);
 			let hid = await holidayModel.findOne({ _id: id });
 			if (!hid) {
-				res.send({ error: "Holiday not Found!" });
+				res.status(400).send({ error: "Holiday not Found!" });
 			}
 			let data = await holidayModel.updateOne(
 				{ _id: req.params.id },
 				{ $set: req.body }
 			);
 			if (data.matchedCount && !data.modifiedCount) {
-				res.send({ error: "Nothing to Update!" });
+				res.status(400).send({ error: "Nothing to Update!" });
 			} else if (data.modifiedCount) {
-				res.send({ error: "Updated Successfully!" });
+				res.send({ Success: "Updated Successfully!" });
 			}
 		} catch (err) {
 			const error = err.toString();
 			if (error.includes("string of 12 bytes or a string of 24 hex")) {
-				res.json({ error: "Invalid ID" });
+				res.status(401).json({ error: "Invalid ID" });
 			} else {
-				res.send({ error: "Something went wrong! Check console" });
+				res.status(500).send({ error: "Something went wrong! Check console" });
 				console.log(`Error is ${error}`);
 			}
 		}
@@ -263,19 +263,19 @@ router.delete(
 			const id = ObjectId(req.params.id);
 			let hid = await holidayModel.findOne({ _id: id });
 			if (!hid) {
-				res.send({ error: "Holiday not Found!" });
+				res.status(404).send({ error: "Holiday not Found!" });
 			}
 			let data = await holidayModel.deleteOne({ _id: req.params.id });
 			if (data.deletedCount) {
-				res.send({ result: "Deleted Successfully!" });
+				res.send({ data: "Deleted Successfully!" });
 			}
 		} catch (err) {
 			const error = err.toString();
 			if (error.includes("string of 12 bytes or a string of 24 hex")) {
-				res.json({ error: "Invalid holiday id!" });
+				res.status(401).json({ error: "Invalid holiday id!" });
 			} else {
-				res.send({ error: "Something went wrong! Check console" });
 				console.log(`Error is ${error}`);
+				res.status(500).send({ error: "Something went wrong! Check console" });
 			}
 		}
 	}
