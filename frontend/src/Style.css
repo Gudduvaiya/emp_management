@@ -3,38 +3,44 @@
 .nav-ul {
     display: flex;
     list-style: none;
-    /* margin-top: auto; */
-    background-color: #e80d54;
+    background-color: #fff;
     justify-content: center;
     padding-left: 0px;
     margin: 0px;
+    flex-direction: column;
+    height: 100vh;
+    width: 209px;
+    box-shadow: -2px -3px 11px black;
 }
 
 .nav-ul li {
     transition-property: background-color;
     transition-delay: 0.2s;
     transition-duration: 0.5s;
-    padding: 17px 18px;
+    /* padding: 17px 18px; */
 }
 
 .nav-ul li a {
+    display: block;
+    width: 100%;
+    height: 100%;
     text-decoration: none;
     padding: 17px 18px;
-    color: white;
+    color: #e80d54;
     font-weight: 700;
     font-size: 17px;
     /* font-family: 'Roboto'; */
     transition-property: all;
     transition-delay: 0.2s;
-    transition-duration: 0.5s;
+    transition-duration: 0.2s;
 }
 
 .nav-ul li:hover {
-    background-color: #fef3f3;
+    background-color: #e80d54;
 }
 
 .nav-ul li a:hover {
-    color: #e80d54;
+    color: #fff;
     font-weight: 700;
 }
 .text-right{
@@ -134,11 +140,32 @@
 /* Sign up ends */
 
 /* Login starts */
+.login{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+}
+.login_head{
+    color: #e80d54;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.login_head h1{
+    font-size: 62px;
+    margin: 0px;
+}
+.login_head h3{
+    font-size: 20px;
+    margin: 0px;
+    font-weight: 500;
+}
 .login-form{
     display: flex;
     flex-direction: column;
-    width: 50%;
-    padding: 220px 0px;
+    padding: 18px 0px;
     align-items: center;
 }
 .login-form input{
@@ -158,5 +185,19 @@
     font-weight: 700;
     font-style: italic;
     /* font-size: 22px; */
+}
+.head{
+    position: absolute;
+    background-color: #e80d54;
+    height: 47px;
+    width: 100%;
+    top: 0;
+}
+.footer{
+    position: absolute;
+    background-color: #e80d54;
+    height: 47px;
+    width: 100%;
+    bottom: 0;
 }
 /* Login ends */
