@@ -43,25 +43,29 @@
     color: #fff;
     font-weight: 700;
 }
-.text-right{
+
+.text-right {
     text-align: right;
     justify-content: right;
 }
-.invalid-input{
+
+.invalid-input {
     font-size: 14px;
     font-weight: 700;
     margin-top: -8px;
     color: red;
     font-style: italic;
 }
+
 /* Navbar End  */
 
 /* Sign up starts */
-.signup{
+.signup {
     display: flex;
     justify-content: space-between;
 }
-.register_head{
+
+.register_head {
     width: 50%;
     background-color: #e80d54;
     color: #fef3f3;
@@ -69,32 +73,38 @@
     align-items: center;
     justify-content: center;
 }
-.register_head h1{
+
+.register_head h1 {
     font-size: 46px;
 }
-.form{
+
+.form {
     display: flex;
     flex-direction: column;
     width: 50%;
     padding: 90px 0px;
     align-items: center;
 }
-.form div{
+
+.form div {
     width: 365px;
     margin: 8px 0px;
 }
-.form div select{
+
+.form div select {
     cursor: pointer;
     padding: 6px;
     border: 2px solid #e80d54;
     border-radius: 6px;
-    outline:none
+    outline: none
 }
-.form div select option{
+
+.form div select option {
     background-color: #e80d54;
     color: #fff;
 }
-.form input{
+
+.form input {
     width: 350px;
     padding: 11px;
     margin: 8px 0px;
@@ -106,12 +116,14 @@
     outline-offset: 6px;
     border-radius: 7px;
 }
+
 .form input::placeholder {
     color: #aaaaaa;
     font-weight: 700;
     font-style: italic;
     /* font-size: 22px; */
 }
+
 .submitbtn {
     padding: 10px;
     border-radius: 36px;
@@ -122,9 +134,11 @@
     font-weight: 700;
     cursor: pointer;
     border: none;
-    background-image: linear-gradient(to right, #e80d54,#e80d54, #fff,#fff);
+    background-image: linear-gradient(to right, #e80d54, #e80d54, #fff, #fff);
     background-size: 320% 100% !important;
-    transition: all .4s ease-in-out
+    transition: all .4s ease-in-out;
+    border: 2px solid #e80d54;
+
 }
 
 .submitbtn:hover {
@@ -132,15 +146,17 @@
     color: #e80d54;
     border: 2px solid #e80d54;
 }
-.err-msg{
+
+.err-msg {
     color: red;
     text-align: left;
     font-size: 12px;
 }
+
 /* Sign up ends */
 
 /* Login starts */
-.login{
+.login {
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -148,28 +164,33 @@
     height: 100vh;
     width: 100%;
 }
-.login_head{
+
+.login_head {
     color: #e80d54;
     display: flex;
     align-items: center;
     flex-direction: column;
 }
-.login_head h1{
+
+.login_head h1 {
     font-size: 62px;
     margin: 0px;
 }
-.login_head h3{
+
+.login_head h3 {
     font-size: 20px;
     margin: 0px;
     font-weight: 500;
 }
-.login-form{
+
+.login-form {
     display: flex;
     flex-direction: column;
     padding: 18px 0px;
     align-items: center;
 }
-.login-form input{
+
+.login-form input {
     width: 350px;
     padding: 11px;
     margin: 8px 0px;
@@ -181,25 +202,46 @@
     outline-offset: 6px;
     border-radius: 7px;
 }
+
 .login-form input::placeholder {
     color: #aaaaaa;
     font-weight: 700;
     font-style: italic;
     /* font-size: 22px; */
 }
-.head{
+
+.head {
     position: absolute;
     background-color: #e80d54;
     height: 47px;
     width: 100%;
     top: 0;
 }
-.footer{
+
+.footer {
     position: absolute;
     background-color: #e80d54;
     height: 47px;
     width: 100%;
     bottom: 0;
 }
+
 /* Login ends */
 
+/* Dashboard st[arts */
+.main-pages {
+    width: 100%;
+    padding: 25px;
+}
+
+.card {
+    padding: 10px;
+    border-radius: 12px;
+    box-shadow: 2px 3px 6px 0px #cdcdcd;
+}
+
+.width-30 {
+    width: 30%;
+}
+
+/* Dashboard ends */

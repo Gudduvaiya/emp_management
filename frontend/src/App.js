@@ -18,7 +18,7 @@ function App() {
 
   useEffect(() => {
     setLoginState(localStorage.getItem("user") ? true : false);
-  }, [isUserLoggedIn]);
+  }, []);
 
   const setLoginState = (newState) => {
     setIsUserLoggedIn(newState);
@@ -31,12 +31,14 @@ function App() {
       {isUserLoggedIn ? (
         <React.Fragment>
           <Nav setLoginState={setLoginState} />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/users" element={<User />} />
-            <Route path="/holidays" element={<Holiday />} />
-            <Route path="/profile" element={<Profile />} />
-          </Routes>
+          <div className="main-pages">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/users" element={<User />} />
+              <Route path="/holidays" element={<Holiday />} />
+              <Route path="/profile" element={<Profile />} />
+            </Routes>
+          </div>
         </React.Fragment>
       ) : (
         <Routes>

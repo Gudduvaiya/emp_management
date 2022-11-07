@@ -1,12 +1,51 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { makeGetAPICall } from "../API";
 
-const Home=()=>{
-    
-    return(
-        <div>
-            <h1>WELCOME!</h1>
-            <h2></h2>
+const Home = () => {
+  const [numUsers, setNumUsers] = useState(0);
+  const [numAdmins, setNumAdmins] = useState(0);
+  const [numEmployees, setEmployees] = useState(0);
+
+  useEffect(() => {
+    const requestObject = {
+      urlPath: "user",
+      onSuccess: (data) => {
+        setNumUsers(data.length);
+        setNumAdmins(data.filter((item) => item.is_admin).length);
+        setEmployees(data.filter((item) => !item.is_admin).length);
+      },
+
+      onFail: (error) => {
+        console.error(error?.response?.data);
+      },
+    };
+    makeGetAPICall(requestObject);
+  }, []);
+
+  return (
+    <>
+      <h1>
+        WELCOME{" "}
+        <span style={{ color: "#e80d54" }}>
+          {JSON.parse(localStorage.getItem("user")).name}
+        </span>{" "}
+      </h1>
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <div className="card width-30">
+          <p>{numUsers}</p>
+          <h2>Users</h2>
         </div>
-    )
-}
-export default Home
+        <div className="card width-30">
+          <p>{numAdmins}</p>
+          <h2>Employees</h2>
+        </div>
+        <div className="card width-30">
+          <p>{numEmployees}</p>
+          <h2>Admins</h2>
+        </div>
+      </div>
+    </>
+  );
+};
+export default Home;
