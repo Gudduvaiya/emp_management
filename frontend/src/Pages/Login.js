@@ -5,24 +5,23 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import "../Style.css"
 
-const Login = () => {
+const Login = ({setLoginState}) => {
   const [username, setid] = useState("");
   const [password, setpassword] = useState("");
   const navigate=useNavigate()
-  let auth=localStorage.getItem("user")
-  useEffect(()=>{
-    if(auth){
-      navigate('/')
-    }
-  },[])
-  const sendData=async()=>{
 
+  useEffect(()=>{
+    if(localStorage.getItem("user")) setLoginState(true);
+  },[]);
+
+  const sendData=async()=>{
     axios.post('http://localhost:4500/api/v1/user/login',{username,password})
     .then((res)=>{
       console.log(res);
-        toast.success("Welcome to Dashboard!",{
-        position: "top-center"})
-        navigate('/')
+      toast.success("Welcome to Dashboard!",{
+        position: "top-center"
+      });
+      setLoginState(true);
       localStorage.setItem("user",JSON.stringify(res.data.data))
       localStorage.setItem("Auth Token",res.data.token)
     })

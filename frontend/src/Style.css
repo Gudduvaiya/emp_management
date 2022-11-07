@@ -31,8 +31,8 @@
     font-size: 17px;
     /* font-family: 'Roboto'; */
     transition-property: all;
-    transition-delay: 0.2s;
-    transition-duration: 0.2s;
+    transition-delay: 0.1s;
+    transition-duration: 0.1s;
 }
 
 .nav-ul li:hover {
@@ -146,6 +146,7 @@
     flex-direction: column;
     align-items: center;
     height: 100vh;
+    width: 100%;
 }
 .login_head{
     color: #e80d54;
@@ -201,3 +202,4 @@
     bottom: 0;
 }
 /* Login ends */
+
