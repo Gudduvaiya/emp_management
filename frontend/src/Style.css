@@ -39,9 +39,21 @@
     background-color: #e80d54;
 }
 
+.nav-ul li:focus {
+    background-color: #e80d54;
+}
+
 .nav-ul li a:hover {
     color: #fff;
     font-weight: 700;
+}
+
+.nav-ul li a:focus {
+    color: #fff;
+    font-weight: 700;
+    background-color: #e80d54;
+    width: 83%;
+    height: 46%;
 }
 
 .text-right {
@@ -238,6 +250,17 @@
     padding: 10px;
     border-radius: 12px;
     box-shadow: 2px 3px 6px 0px #cdcdcd;
+}
+
+.card p {
+    font-size: 30px;
+    margin-bottom: 0px;
+    font-weight: 700;
+    color: #e80d54;
+}
+
+.card h2 {
+    margin-top: 0px;
 }
 
 .width-30 {
