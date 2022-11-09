@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 import Login from "./Pages/Login";
 import Nav from "./Components/Nav";

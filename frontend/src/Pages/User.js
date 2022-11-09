@@ -19,7 +19,7 @@ const User = () => {
         setUsers(data);
 
         setTimeout(() => {
-          const table = $(tableRef.current).DataTable();
+          $(tableRef.current).DataTable();
         }, 1000);
         //datatable code
         // const table = $(tableRef.current).DataTable({

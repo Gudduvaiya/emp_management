@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -8,7 +7,6 @@ import "../Style.css";
 const Login = ({ setLoginState }) => {
   const [username, setid] = useState("");
   const [password, setpassword] = useState("");
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (localStorage.getItem("user")) setLoginState(true);

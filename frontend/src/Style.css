@@ -39,22 +39,22 @@
     background-color: #e80d54;
 }
 
-.nav-ul li:focus {
+/* .nav-ul li:focus {
     background-color: #e80d54;
-}
+} */
 
 .nav-ul li a:hover {
     color: #fff;
     font-weight: 700;
 }
 
-.nav-ul li a:focus {
+/* .nav-ul li a:focus {
     color: #fff;
     font-weight: 700;
     background-color: #e80d54;
     width: 83%;
     height: 46%;
-}
+} */
 
 .text-right {
     text-align: right;
@@ -274,3 +274,32 @@
 
 /* Profile starts */
 /* Profile ends */
+
+/* Holiday Modal Add starts */
+.modal-body {
+    position: relative;
+    /* flex: 1 1 auto; */
+    padding: var(--bs-modal-padding);
+    display: flex;
+    flex-direction: column;
+    width: 55%;
+}
+
+.modal-body input {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    padding: 10px;
+    margin: 10px 0px;
+    border-radius: 6px;
+    outline: none;
+    box-shadow: 3px 3px 2px green;
+    border: 1px solid green;
+}
+
+.holiday-action {
+    display: flex;
+}
+
+
+/* Holiday Modal Add ends */
