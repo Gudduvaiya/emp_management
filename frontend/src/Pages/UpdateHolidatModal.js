@@ -1,33 +1,39 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { toast } from "react-toastify";
-import { makePostAPICall } from "../API";
+import { makePutAPIcall } from "../API";
 
 function UpdateHolidayModal(props) {
-  const [name, setHname] = useState(props.data.name);
+  const [name, setHname] = useState("");
   const [day, setHday] = useState("");
   const [date, setHdate] = useState("");
 
+  useEffect(() => {
+    console.log(props.data);
+    if (props.data) {
+      setHname(props.data.name);
+      setHday(props.data.day);
+      setHdate(props.data.date);
+    }
+  }, [props.data]);
   const sendData = () => {
     const reqObj = {
       urlPath: `holiday/update/${props.id}`,
       data: { name, day, date },
       onSuccess: (data) => {
         console.log(data);
-        toast.success(`Holiday ${data.data.name} Updated Successfully!`);
-        // setHname(data.data.name);
-        // setHday(data.data.day);
-        // setHdate(data.data.date);
+        toast.success(`Holiday Updated Successfully!`);
       },
 
       onFail: (err) => {
         console.log(err);
+        console.log(props.data.name);
         toast.error(err.response.data.Error);
-        toast.error(err.response.data.error);
+        toast.warning(err.response.data.error);
       },
     };
-    makePostAPICall(reqObj);
+    makePutAPIcall(reqObj);
   };
   return (
     <>
@@ -46,8 +52,8 @@ function UpdateHolidayModal(props) {
           <input
             type="text"
             placeholder="Enter Holiday Name"
-            value={name}
-            // defaultValue={props.data.name}
+            // value={name}
+            defaultValue={name}
             onChange={(e) => {
               setHname(e.target.value);
               //   console.log(name);

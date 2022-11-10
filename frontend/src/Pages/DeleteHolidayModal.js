@@ -2,16 +2,19 @@ import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { toast } from "react-toastify";
-import { makeGetAPICall } from "../API";
+import { makeDeleteAPIcall } from "../API";
 
 function DeleteHolidayModal(props) {
   const sendData = () => {
     const reqObj = {
-      urlPath: "holiday/remove",
+      urlPath: `holiday/remove/${props.id}`,
       //   data: { name, day, date },
       onSuccess: (data) => {
         console.log(data);
-        toast.success(`Holiday ${data.data.name} Deleted Successfully!`);
+        toast.success(`Holiday Deleted Successfully!`);
+        {
+          props.close();
+        }
       },
 
       onFail: (err) => {
@@ -20,7 +23,7 @@ function DeleteHolidayModal(props) {
         toast.error(err.response.data.error);
       },
     };
-    makeGetAPICall(reqObj);
+    makeDeleteAPIcall(reqObj);
   };
   return (
     <>
@@ -42,7 +45,7 @@ function DeleteHolidayModal(props) {
           <Button variant="danger" onClick={sendData}>
             Delete
           </Button>
-          <Button variant="light" onClick={props.onHide}>
+          <Button variant="light" onClick={props.close}>
             Cancel
           </Button>
         </Modal.Footer>
