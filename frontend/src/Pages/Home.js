@@ -37,11 +37,11 @@ const Home = () => {
         </div>
         <div className="card width-30">
           <p>{numAdmins}</p>
-          <h2>Employees</h2>
+          <h2>Admins</h2>
         </div>
         <div className="card width-30">
           <p>{numEmployees}</p>
-          <h2>Admins</h2>
+          <h2>Employees</h2>
         </div>
       </div>
     </>

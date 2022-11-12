@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useMemo } from "react";
 import DataTable from "react-data-table-component";
-import FilterComponent from "./FilterComponent";
+import FilterComponent from "../Components/FilterComponent";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { toast } from "react-toastify";
@@ -12,228 +12,20 @@ import {
   makePutAPIcall,
 } from "../API";
 
-// Add Holiday Modal
-const AddHolidayModal = (props) => {
-  const [name, setHname] = useState("");
-  const [day, setHday] = useState("");
-  const [date, setHdate] = useState("");
-  const sendAddHolidayData = () => {
-    const reqObj = {
-      urlPath: "holiday",
-      data: { name, day, date },
-      onSuccess: (data) => {
-        console.log(data);
-        toast.success(`Holiday ${data.data.name} Added Successfully!`);
-        setHname("");
-        setHday("");
-        setHdate("");
-      },
-
-      onFail: (err) => {
-        console.log(err);
-        toast.error(err.response.data.Error);
-        toast.error(err.response.data.error);
-      },
-    };
-    makePostAPICall(reqObj);
-  };
-  return (
-    <>
-      <Modal
-        {...props}
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-      >
-        <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">
-            Add Holiday
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <input
-            type="text"
-            placeholder="Enter Holiday Name"
-            value={name}
-            onChange={(e) => {
-              setHname(e.target.value);
-            }}
-          />
-          <input
-            type="text"
-            placeholder="Enter Holiday Day"
-            value={day}
-            onChange={(e) => {
-              setHday(e.target.value);
-            }}
-          />
-          <input
-            type="date"
-            placeholder="Enter Holiday Date"
-            value={date}
-            onChange={(e) => {
-              setHdate(e.target.value);
-            }}
-          />
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="success" onClick={sendAddHolidayData}>
-            Add
-          </Button>
-          <Button variant="light" onClick={props.onHide}>
-            Close
-          </Button>
-        </Modal.Footer>
-      </Modal>
-      ;
-    </>
-  );
-};
-
-//Delete Holiday Modal
-function DeleteHolidayModal(props) {
-  const sendData = () => {
-    const reqObj = {
-      urlPath: `holiday/remove/${props.id}`,
-      //   data: { name, day, date },
-      onSuccess: (data) => {
-        console.log(data);
-        toast.success(`Holiday Deleted Successfully!`);
-        {
-          props.close();
-        }
-      },
-
-      onFail: (err) => {
-        console.log(err);
-        toast.error(err.response.data.Error);
-        toast.error(err.response.data.error);
-      },
-    };
-    makeDeleteAPIcall(reqObj);
-  };
-  return (
-    <>
-      <Modal
-        {...props}
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-      >
-        <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">
-            Delete Holiday
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <p>Are you sure you want to Delete this Holiday ???</p>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="danger" onClick={sendData}>
-            Delete
-          </Button>
-          <Button variant="light" onClick={props.close}>
-            Cancel
-          </Button>
-        </Modal.Footer>
-      </Modal>
-    </>
-  );
-}
-
-//Update Holidayy Modal
-function UpdateHolidayModal(props) {
-  const [name, setHname] = useState("");
-  const [day, setHday] = useState("");
-  const [date, setHdate] = useState("");
-
-  useEffect(() => {
-    console.log(props.data);
-    if (props.data) {
-      setHname(props.data.name);
-      setHday(props.data.day);
-      setHdate(props.data.date);
-    }
-  }, [props.data]);
-  const sendData = () => {
-    const reqObj = {
-      urlPath: `holiday/update/${props.id}`,
-      data: { name, day, date },
-      onSuccess: (data) => {
-        console.log(data);
-        toast.success(`Holiday Updated Successfully!`);
-        props.onHide();
-      },
-
-      onFail: (err) => {
-        toast.error(err.response.data.Error);
-        toast.warning(err.response.data.error);
-      },
-    };
-    makePutAPIcall(reqObj);
-  };
-  return (
-    <>
-      <Modal
-        {...props}
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-      >
-        <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">
-            Update Holiday
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <input
-            type="text"
-            placeholder="Enter Holiday Name"
-            // value={name}
-            defaultValue={name}
-            onChange={(e) => {
-              setHname(e.target.value);
-            }}
-          />
-          <input
-            type="text"
-            placeholder="Enter Holiday Day"
-            value={day}
-            onChange={(e) => {
-              setHday(e.target.value);
-            }}
-          />
-          <input
-            type="date"
-            placeholder="Enter Holiday Date"
-            value={date}
-            onChange={(e) => {
-              setHdate(e.target.value);
-            }}
-          />
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="success" onClick={sendData}>
-            Update
-          </Button>
-          <Button variant="light" onClick={props.onHide}>
-            Close
-          </Button>
-        </Modal.Footer>
-      </Modal>
-    </>
-  );
-}
+import { DeleteConfirmationModal } from "../Components/Modals";
 
 const Holiday = () => {
-  const [holiday, setHoliday] = useState([]);
+  const [holidays, setHolidays] = useState([]);
   const [columns, setColumns] = useState([]);
   const [filterText, setFilterText] = useState("");
-  const [addModalShow, setAddModalShow] = useState(false);
-  const [updateModal, setUpdateModal] = useState(false);
-  const [deleteModal, setDeletetModal] = useState(false);
   const [selectedHolidayId, setSelectedHolidayId] = useState(null);
-  const [updateData, setUpdateData] = useState(null);
+  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
+  const [isAddEditModalVisible, setIsAddEditModalVisible] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+
+  const [name, setName] = useState("");
+  const [day, setDay] = useState("");
+  const [date, setDate] = useState("");
 
   const cols = [
     {
@@ -259,28 +51,27 @@ const Holiday = () => {
           <Button
             variant="success"
             onClick={() => {
-              console.log(row);
+              setIsEditing(true);
               setSelectedHolidayId(row._id);
-              setUpdateData(row);
-              setUpdateModal(true);
+              setName(row.name);
+              setDay(row.day);
+              setDate(row.date);
+              setIsAddEditModalVisible(true);
             }}
           >
-            Update
+            Edit
           </Button>
         );
       },
     },
     {
       name: "Action",
-      // selector: (row) => setSelectedHolidayId(row._id),
       cell: (row) => {
-        // console.log(row);
-        // console.log(row._id);
         return (
           <Button
             onClick={() => {
               setSelectedHolidayId(row._id);
-              setDeletetModal(true);
+              setIsDeleteModalVisible(true);
             }}
             variant="danger"
           >
@@ -292,11 +83,14 @@ const Holiday = () => {
   ];
 
   useEffect(() => {
+    fetchHolidays();
+  }, []);
+
+  const fetchHolidays = () => {
     const reqObj = {
       urlPath: "holiday",
       onSuccess: (data) => {
-        // console.log(data);
-        setHoliday(data);
+        setHolidays(data);
         setColumns(cols);
       },
       onFail: (err) => {
@@ -304,12 +98,13 @@ const Holiday = () => {
       },
     };
     makeGetAPICall(reqObj);
-  }, []);
+  };
 
   //Search Filter section
-  const filteredItems = holiday.filter(
+  const filteredItems = holidays.filter(
     (item) => item && item.name.toLowerCase().includes(filterText.toLowerCase())
   );
+
   const subHeaderComponentMemo = useMemo(() => {
     const handleClear = () => {
       if (filterText) {
@@ -325,6 +120,67 @@ const Holiday = () => {
     );
   }, [filterText]);
 
+  const hideAddEditModal = () => {
+    setIsAddEditModalVisible(false);
+    if (isEditing) setIsEditing(false);
+    setName("");
+    setDay("");
+    setDate("");
+  };
+
+  const handleAddEdit = () => {
+    if (isEditing) {
+      const reqObj = {
+        urlPath: `holiday/update/${selectedHolidayId}`,
+        data: { name, day, date },
+        onSuccess: (data) => {
+          toast.success(`Holiday Updated Successfully!`);
+          hideAddEditModal();
+          fetchHolidays();
+        },
+        onFail: (err) => {
+          toast.error(err.response.data.Error);
+          toast.warning(err.response.data.error);
+        },
+      };
+      makePutAPIcall(reqObj);
+    } else {
+      const reqObj = {
+        urlPath: "holiday",
+        data: { name, day, date },
+        onSuccess: (data) => {
+          toast.success(`Holiday ${data.data.name} Added Successfully!`);
+          hideAddEditModal();
+          fetchHolidays();
+        },
+        onFail: (err) => {
+          console.log(err);
+          toast.error(err.response.data.Error);
+          toast.error(err.response.data.error);
+        },
+      };
+      makePostAPICall(reqObj);
+    }
+  };
+
+  const handleDelete = () => {
+    const reqObj = {
+      urlPath: `holiday/remove/${selectedHolidayId}`,
+      onSuccess: (data) => {
+        console.log(data);
+        toast.success(`Holiday Deleted Successfully!`);
+        setIsDeleteModalVisible(false);
+        fetchHolidays();
+      },
+      onFail: (err) => {
+        console.log(err);
+        toast.error(err.response.data.Error);
+        toast.error(err.response.data.error);
+      },
+    };
+    makeDeleteAPIcall(reqObj);
+  };
+
   return (
     <div>
       <h1>Holidays</h1>
@@ -332,7 +188,7 @@ const Holiday = () => {
         className="submitbtn"
         style={{ marginTop: "0px", position: "absolute", zIndex: "99" }}
         onClick={() => {
-          setAddModalShow(true);
+          setIsAddEditModalVisible(true);
         }}
       >
         Add Holiday
@@ -344,30 +200,59 @@ const Holiday = () => {
         subHeader
         subHeaderComponent={subHeaderComponentMemo}
       />
-      <AddHolidayModal
-        show={addModalShow}
-        onHide={() => {
-          setAddModalShow(false);
-        }}
-      />
-      <UpdateHolidayModal
-        show={updateModal}
-        id={selectedHolidayId}
-        // data={holiday.filter((item) => item._id === selectedHolidayId)}
-        data={updateData}
-        onHide={() => {
-          setUpdateModal(false);
-        }}
-      />
-      <DeleteHolidayModal
-        id={selectedHolidayId}
-        show={deleteModal}
-        close={() => {
-          setDeletetModal(false);
-        }}
-        onHide={() => {
-          setDeletetModal(false);
-        }}
+      <Modal
+        show={isAddEditModalVisible}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header>
+          <Modal.Title id="contained-modal-title-vcenter">
+            {isEditing ? "Edit" : "Add"} Holiday
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <input
+            type="text"
+            placeholder="Enter Holiday Name"
+            value={name}
+            onChange={({ target }) => {
+              setName(target.value);
+            }}
+          />
+          <input
+            type="text"
+            placeholder="Enter Holiday Day"
+            value={day}
+            onChange={({ target }) => {
+              setDay(target.value);
+            }}
+          />
+          <input
+            type="date"
+            placeholder="Enter Holiday Date"
+            value={date}
+            onChange={({ target }) => {
+              setDate(target.value);
+            }}
+          />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="success" onClick={handleAddEdit}>
+            {isEditing ? "Update" : "Add"}
+          </Button>
+          <Button variant="light" onClick={hideAddEditModal}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <DeleteConfirmationModal
+        show={isDeleteModalVisible}
+        body={`The Holiday named ${
+          holidays.filter((item) => item._id === selectedHolidayId)[0]?.name
+        } will be deleted and this action is irreversible!`}
+        onConfirm={handleDelete}
+        onCancel={() => setIsDeleteModalVisible(false)}
       />
     </div>
   );
