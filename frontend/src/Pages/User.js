@@ -8,15 +8,18 @@ import {
   makePutAPIcall,
 } from "../API";
 import Modal from "react-bootstrap/Modal";
-import Button from "react-bootstrap/esm/Button";
+import { Button } from "react-bootstrap/esm";
 import { toast } from "react-toastify";
 
-import { DeleteConfirmationModal } from "../Components/Modals";
-
+import {
+  DeleteConfirmationModal,
+  ChangePasswordModal,
+} from "../Components/Modals";
 const User = () => {
   const [users, setUsers] = useState([]);
   const [DeleteModalVisible, setDeleteModalVisible] = useState(false);
   const [AddEditModalVisible, setAddEditModalVisible] = useState(false);
+  const [CPasswordModalVisible, setCPasswordModalVisible] = useState(false);
   const [selectedUsername, setSelectedUsername] = useState(null);
   const [isAdding, setisAdding] = useState(true);
   const [name, setName] = useState("");
@@ -46,7 +49,7 @@ const User = () => {
     makeGetAPICall(reqObj);
   }, []);
 
-  // fetch all user API
+  // fetch all users API
   const FetchUsers = () => {
     const reqObj = {
       urlPath: "user",
@@ -114,10 +117,14 @@ const User = () => {
     <div>
       <h1>Users</h1>
       <Button
-        variant="info mb-3"
+        variant="warning mb-3"
         onClick={() => {
           setAddEditModalVisible(true);
           setisAdding(true);
+          setUsername("");
+          setName("");
+          setDesigation("");
+          setjoined_on("");
         }}
       >
         Add User
@@ -130,6 +137,7 @@ const User = () => {
             <th>Email</th>
             <th>Designation</th>
             <th>Admin</th>
+            <th>Action</th>
             <th>Action</th>
             <th>Action</th>
           </tr>
@@ -145,7 +153,7 @@ const User = () => {
                 <td>{item.is_admin ? "Yes" : "No"}</td>
                 <td>
                   <Button
-                    variant="success"
+                    variant="primary"
                     onClick={() => {
                       setAddEditModalVisible(true);
                       setSelectedUsername(item.username);
@@ -153,9 +161,22 @@ const User = () => {
                       setUsername(item.username);
                       setName(item.name);
                       setDesigation(item.desigation);
+                      setjoined_on(item.joined_on);
                     }}
                   >
                     Edit
+                  </Button>
+                </td>
+
+                <td>
+                  <Button
+                    variant="success"
+                    onClick={() => {
+                      setCPasswordModalVisible(true);
+                      setSelectedUsername(item.username);
+                    }}
+                  >
+                    Change Password
                   </Button>
                 </td>
                 <td>
@@ -188,18 +209,15 @@ const User = () => {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {isAdding ? (
-            <input
-              type="text"
-              placeholder="Enter Username"
-              value={username}
-              onChange={({ target }) => {
-                setUsername(target.value);
-              }}
-            />
-          ) : (
-            <span></span>
-          )}
+          <input
+            type="text"
+            placeholder="Enter Username"
+            value={username}
+            onChange={({ target }) => {
+              setUsername(target.value);
+            }}
+          />
+
           <input
             type="text"
             placeholder="Enter Name"
@@ -216,17 +234,17 @@ const User = () => {
               setDesigation(target.value);
             }}
           />
+          <input
+            type="date"
+            placeholder="Enter Joining Date"
+            value={joined_on}
+            onChange={({ target }) => {
+              setjoined_on(target.value);
+            }}
+          />
+
           {isAdding ? (
             <>
-              <input
-                type="date"
-                placeholder="Enter Joining Date"
-                value={joined_on}
-                onChange={({ target }) => {
-                  setjoined_on(target.value);
-                }}
-              />
-
               <input
                 type="email"
                 placeholder="Enter e-mail"
@@ -279,6 +297,13 @@ const User = () => {
         }}
         onConfirm={HandleDeleteonClick}
         purposeBtn="Remove"
+      />
+      <ChangePasswordModal
+        username={selectedUsername}
+        show={CPasswordModalVisible}
+        onCancel={() => {
+          setCPasswordModalVisible(false);
+        }}
       />
     </div>
   );

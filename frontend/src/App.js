@@ -22,9 +22,9 @@ function App() {
   }, []);
 
   const setLoginState = (newState) => {
-    setIsUserLoggedIn(newState);
     navigate(newState ? "/" : "/login");
     if (!newState) localStorage.clear();
+    setIsUserLoggedIn(newState);
   };
 
   return (

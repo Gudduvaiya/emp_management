@@ -11,8 +11,9 @@ import {
   makeDeleteAPIcall,
   makePutAPIcall,
 } from "../API";
-
 import { DeleteConfirmationModal } from "../Components/Modals";
+
+// import DeleteConfirmationModal from "../Components/Modals/DeleteConfirmationModal";
 
 const Holiday = () => {
   const [holidays, setHolidays] = useState([]);
@@ -26,6 +27,7 @@ const Holiday = () => {
   const [name, setName] = useState("");
   const [day, setDay] = useState("");
   const [date, setDate] = useState("");
+  const isAdmin = JSON.parse(localStorage.getItem("user")).is_admin;
 
   const cols = [
     {
@@ -64,6 +66,7 @@ const Holiday = () => {
         );
       },
     },
+
     {
       name: "Action",
       cell: (row) => {
@@ -184,17 +187,21 @@ const Holiday = () => {
   return (
     <div>
       <h1>Holidays</h1>
-      <button
-        className="submitbtn"
-        style={{ marginTop: "0px", position: "absolute", zIndex: "99" }}
-        onClick={() => {
-          setIsAddEditModalVisible(true);
-        }}
-      >
-        Add Holiday
-      </button>
+      {isAdmin ? (
+        <button
+          className="submitbtn"
+          style={{ marginTop: "0px", position: "absolute", zIndex: "99" }}
+          onClick={() => {
+            setIsAddEditModalVisible(true);
+          }}
+        >
+          Add Holiday
+        </button>
+      ) : (
+        <span></span>
+      )}
       <DataTable
-        columns={columns}
+        columns={isAdmin ? columns : columns.slice(0, 3)}
         data={filteredItems}
         pagination
         subHeader

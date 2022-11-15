@@ -5,6 +5,7 @@ const Home = () => {
   const [numUsers, setNumUsers] = useState(0);
   const [numAdmins, setNumAdmins] = useState(0);
   const [numEmployees, setEmployees] = useState(0);
+  const isAdmin = JSON.parse(localStorage.getItem("user")).is_admin;
 
   useEffect(() => {
     const requestObject = {
@@ -30,20 +31,24 @@ const Home = () => {
           {JSON.parse(localStorage.getItem("user")).name}
         </span>{" "}
       </h1>
-      <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <div className="card width-30">
-          <p>{numUsers}</p>
-          <h2>Users</h2>
-        </div>
-        <div className="card width-30">
-          <p>{numAdmins}</p>
-          <h2>Admins</h2>
-        </div>
-        <div className="card width-30">
-          <p>{numEmployees}</p>
-          <h2>Employees</h2>
-        </div>
-      </div>
+      {isAdmin && (
+        <>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <div className="card width-30">
+              <p>{numUsers}</p>
+              <h2>Users</h2>
+            </div>
+            <div className="card width-30">
+              <p>{numAdmins}</p>
+              <h2>Admins</h2>
+            </div>
+            <div className="card width-30">
+              <p>{numEmployees}</p>
+              <h2>Employees</h2>
+            </div>
+          </div>
+        </>
+      )}
     </>
   );
 };
